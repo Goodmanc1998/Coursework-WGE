@@ -24,6 +24,13 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKey(KeyCode.F3))
+        {
+            voxelChunk.Save();
+        }
+
+
         if (Input.GetButtonDown("Fire1"))
         {
             Vector3 v;

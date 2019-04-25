@@ -21,11 +21,15 @@ public class InventoryManager : MonoBehaviour
     public GameObject startItem;
 
     List<InventoryItemScript> inventoryList;
+    List<InventoryItemScript> sortingList;
+
+    bool lowestFirst;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        lowestFirst = true;
 
         inventoryList = new List<InventoryItemScript>();
         for (int i = 0; i < itemNames.Count; i++)
@@ -56,10 +60,12 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public void InventoryActive()
+    public void InventoryActive(bool active)
     {
-        mainPanel.SetActive(true);
+        mainPanel.SetActive(active);
     }
+
+
 
     public void InventorySlot(int place)
     {
@@ -85,29 +91,44 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.F5))
-            MergeSort(inventoryList);
-            //StartQuickSort();
 
         for (int i = 0; i < inventoryList.Count; i++)
         {
             if (inventoryList[i].itemNameText.text == "Grass")
             {
                 inventoryList[i].itemAmountText.text = itemAmounts[0].ToString();
+                inventoryList[i].itemAmount = itemAmounts[0];
             }
             if (inventoryList[i].itemNameText.text == "Dirt")
             {
                 inventoryList[i].itemAmountText.text = itemAmounts[1].ToString();
+                inventoryList[i].itemAmount = itemAmounts[1];
             }
             if (inventoryList[i].itemNameText.text == "Sand")
             {
                 inventoryList[i].itemAmountText.text = itemAmounts[2].ToString();
+                inventoryList[i].itemAmount = itemAmounts[2];
             }
             if (inventoryList[i].itemNameText.text == "Stone")
             {
                 inventoryList[i].itemAmountText.text = itemAmounts[3].ToString();
+                inventoryList[i].itemAmount = itemAmounts[3];
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            StartMergeSort();
+            for (int i = 0; i < inventoryList.Count; i++)
+            {
+                Debug.Log(inventoryList[i].itemAmount);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            lowestFirst = false;
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+            lowestFirst = true;
 
     }
 
@@ -127,87 +148,15 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
-    public void SelectionSortInventory()
-    {
-        // iterate through every item in the list except last
-        for (int i = 0; i < inventoryList.Count - 1; i++)
-        {
-            int minIndex = i;
-            // iterate through unsorted portion of the list
-            for (int j = i; j < inventoryList.Count; j++)
-            {
-                if (inventoryList[j].itemAmount <
-                inventoryList[minIndex].itemAmount)
-                {
-                    minIndex = j;
-                }
-            }
-            // Swap the minimum item into position
-            if (minIndex != i)
-            {
-                InventoryItemScript iis = inventoryList[i];
-                inventoryList[i] = inventoryList[minIndex];
-                inventoryList[minIndex] = iis;
-            }
-        }
-        // Display the list in the new correct order
-        DisplayListInOrder();
-    }
-
-    public void StartQuickSort()
-    {
-
-        inventoryList = QuickSort(inventoryList);
-        DisplayListInOrder();
-    }
-
-    List<InventoryItemScript> QuickSort(List<InventoryItemScript> listIn)
-    {
-        if (listIn.Count <= 1)
-        {
-            return listIn;
-        }
-
-        // Naive pivot selection
-        int pivotIndex = 0;
-
-        // Left and right lists
-        List<InventoryItemScript> leftList = new List<InventoryItemScript>();
-        List<InventoryItemScript> rightList = new List<InventoryItemScript>();
-
-        for (int i = 1; i < listIn.Count; i++)
-        {
-            // Compare amounts to determine list to add to
-            if (listIn[i].itemAmount > listIn[pivotIndex].itemAmount)
-            {
-                // Greater than pivot to left list
-                leftList.Add(listIn[i]);
-            }
-            else
-            {
-                // Smaller than pivot to right list
-                rightList.Add(listIn[i]);
-            }
-        }
-
-        // Recurse left list
-        leftList = QuickSort(leftList);
-
-        //Recurse right list
-        rightList = QuickSort(rightList);
-
-        // Concatenate lists: left + pivot + right
-        leftList.Add(listIn[pivotIndex]);
-        leftList.AddRange(rightList);
-        return leftList;
-    }
-
     public void StartMergeSort()
     {
-
         inventoryList = MergeSort(inventoryList);
+
         DisplayListInOrder();
+
+        //for (int i = 0; i < inventoryList.Count; i++)
+            //Debug.Log("pos " + i + " is item with amount " + inventoryList[i].itemAmount);
+
     }
 
     List<InventoryItemScript> MergeSort(List<InventoryItemScript> listIn)
@@ -237,64 +186,44 @@ public class InventoryManager : MonoBehaviour
 
     List<InventoryItemScript> Merge(List<InventoryItemScript> leftList, List<InventoryItemScript> rightList)
     {
+
         List<InventoryItemScript> merged = new List<InventoryItemScript>();
         int i = 0;
         int j = 0;
-        /*
-        while (i < leftList.Count || j < rightList.Count)
-        {
-            if(leftList[i].itemAmount <= rightList[j].itemAmount)
-            {
-                merged.Add(leftList[i]);
-                leftList.Remove(leftList[i]);
-                i++;
-            } else
-            {
-                merged.Add(rightList[j]);
-                rightList.Remove(rightList[i]);
-                j++;
-            }
-        }
 
-        if (i < leftList.Count)
+        if (lowestFirst)
         {
-            merged.Add(leftList[i]);
-            leftList.Remove(leftList[i]);
-        }
-        else if (j < rightList.Count)
-        {
-            merged.Add(rightList[j]);
-            rightList.Remove(rightList[i]);
-        }*/
-
-        while (leftList.Count > 0 || rightList.Count > 0)
-        {
-            if (leftList.Count > 0 && rightList.Count > 0)
+            while (leftList.Count > 0 || rightList.Count > 0)
             {
-
-                if (leftList[0].itemAmount <= rightList[0].itemAmount)
+                if (leftList.Count > 0 && rightList.Count > 0)
                 {
+
+                    if (leftList[0].itemAmount <= rightList[0].itemAmount)
+                    {
+                        merged.Add(leftList[0]);
+                        leftList.Remove(leftList[0]);
+                        i++;
+                    }
+                    else
+                    {
+                        merged.Add(rightList[0]);
+                        rightList.Remove(rightList[0]);
+                        j++;
+                    }
+                }
+                else if (leftList.Count > 0)
+                {
+
                     merged.Add(leftList[0]);
                     leftList.Remove(leftList[0]);
-                    i++;
                 }
-                else
+                else if (rightList.Count > 0)
                 {
                     merged.Add(rightList[0]);
                     rightList.Remove(rightList[0]);
-                    j++;
                 }
-            } else if (leftList.Count > 0)
-            {
-                merged.Add(leftList[0]);
-                leftList.Remove(leftList[0]);
-            }
-            else if (rightList.Count > 0)
-            {
-                merged.Add(rightList[0]);
-                rightList.Remove(rightList[0]);
-            }
 
+            }
         }
 
 

@@ -6,16 +6,16 @@ public class AudioManager : MonoBehaviour
 {
 
     public AudioClip dirtDestroy;
-    public AudioClip dirtPickup;
+    public AudioClip dirtPlace;
 
     public AudioClip grassDestroy;
-    public AudioClip grassPickup;
+    public AudioClip grassPlace;
 
     public AudioClip sandDestroy;
-    public AudioClip sandPickup;
+    public AudioClip sandPlace;
 
     public AudioClip stoneDestroy;
-    public AudioClip stonePickup;
+    public AudioClip stonePlace;
 
     // play the destroy block sound
     void PlayDestroyBlockSound()
@@ -31,42 +31,42 @@ public class AudioManager : MonoBehaviour
 
     void GrassDestroy()
     {
-        Debug.Log("GrassDestroy");
+        GetComponent<AudioSource>().PlayOneShot(grassDestroy);
     }
 
     void GrassPlace()
     {
-        Debug.Log("GrassPlace");
+        GetComponent<AudioSource>().PlayOneShot(grassPlace);
     }
 
     void DirtDestroy()
     {
-        Debug.Log("DD");
+        GetComponent<AudioSource>().PlayOneShot(dirtDestroy);
     }
 
     void DirtPlace()
     {
-        Debug.Log("DP");
+        GetComponent<AudioSource>().PlayOneShot(dirtPlace);
     }
 
     void StonePlace()
     {
-        Debug.Log("StP");
+        GetComponent<AudioSource>().PlayOneShot(stonePlace);
     }
 
     void StoneDestroy()
     {
-        Debug.Log("StD");
+        GetComponent<AudioSource>().PlayOneShot(stoneDestroy);
     }
 
     void SandPlace()
     {
-        Debug.Log("SaP");
+        GetComponent<AudioSource>().PlayOneShot(sandPlace);
     }
 
     void SandDestroy()
     {
-        Debug.Log("SaD");
+        GetComponent<AudioSource>().PlayOneShot(sandDestroy);
     }
 
     // When game object is enabled

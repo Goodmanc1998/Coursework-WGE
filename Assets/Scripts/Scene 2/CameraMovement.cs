@@ -5,6 +5,10 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public GameObject player;
+    public GameObject NPC;
+
+    public bool followPlayer;
+
     Vector3 targetPosition;
     Vector3 cameraPosition;
 
@@ -12,19 +16,28 @@ public class CameraMovement : MonoBehaviour
 
     public float shakeTimer;
     public float shakePower;
+    public float shakeLength;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        followPlayer = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         cameraPosition = transform.position;
+        if(followPlayer)
+        {
+            targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, cameraPosition.z);
+        }
+        else
+        {
+            targetPosition = new Vector3(NPC.transform.position.x, NPC.transform.position.y, cameraPosition.z);
+        }
 
-        targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, cameraPosition.z);
 
         transform.position = Vector3.Lerp(cameraPosition, targetPosition, speed);
 
@@ -38,35 +51,18 @@ public class CameraMovement : MonoBehaviour
 
         }
 
-        if(Input.GetButtonDown("Fire1"))
-        {
-            CameraShake(1);
-        }
 
         
     }
 
-    IEnumerator Movement()
+    public void CameraShake()
     {
-        float t = 0;
-
-        while (t < 1)
-        {
-            t += Time.deltaTime;
-
-            //gameObject.transform.position = cameraPosition + (targetPosition - cameraPosition) * t;
-
-            //gameObject.transform.position = Vector3.Lerp(cameraPosition, targetPosition, speed);
-
-            transform.position = Vector3.Lerp(cameraPosition, targetPosition, t);
-
-            yield return null;
-
-        }
+        shakeTimer = shakeLength;
     }
 
-    public void CameraShake(float timeInAir)
+    public void ChangeTarget(bool NPCCollided)
     {
-        shakeTimer = timeInAir;
+        followPlayer = NPCCollided;
     }
+
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController2D : MonoBehaviour {
 
@@ -41,6 +42,11 @@ public class PlayerController2D : MonoBehaviour {
         if(Input.GetButtonDown("Fire1"))
         {
             _dashPressedInput(new Vector2(hMove, vMove));
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Scene 1");
         }
 
         _hMoveInput(hMove);

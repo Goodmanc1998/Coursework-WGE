@@ -27,6 +27,7 @@ public class PlayerMovement2D : MonoBehaviour {
     Coroutine _dashReloadHandle = null;
 
     public float inAirTime;
+    public float timeForShake;
     public CameraMovement CameraMovement;
 
     // Use this for initialization
@@ -92,15 +93,16 @@ public class PlayerMovement2D : MonoBehaviour {
         {
             inAirTime += Time.deltaTime;
 
-
-            if (inAirTime >= 0.7 && _mState == MovementState.ON_GROUND)
-            {
-                CameraMovement.CameraShake(inAirTime);
-                inAirTime = 0;
-            }
         }
-        else
+
+        if (inAirTime >= timeForShake && _mState == MovementState.ON_GROUND)
+        {
+            CameraMovement.CameraShake();
             inAirTime = 0;
+        }else if(_mState == MovementState.ON_GROUND)
+        {
+            inAirTime = 0;
+        }
 
 
     }

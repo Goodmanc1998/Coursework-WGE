@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VoxelChunk : MonoBehaviour {
 
-    public SceneManager sceneManager;
+    public GameManager gameManager;
     PlayerScript playerScript;
 
     VoxelGenerator voxelGenerator;
@@ -58,7 +58,7 @@ public class VoxelChunk : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F2))
         {
             // Get terrainArray from XML file
-            terrainArray = XMLVoxelFileWriter.LoadChunkFromXMLFile(16, sceneManager.fileLoadName);
+            terrainArray = XMLVoxelFileWriter.LoadChunkFromXMLFile(16, gameManager.fileLoadName);
             // Draw the correct faces
             CreateTerrain();
             // Update mesh info
@@ -70,18 +70,20 @@ public class VoxelChunk : MonoBehaviour {
     public void Apply()
     {
         // Get terrainArray from XML file
-        terrainArray = XMLVoxelFileWriter.LoadChunkFromXMLFile(16, sceneManager.fileLoadName);
+        terrainArray = XMLVoxelFileWriter.LoadChunkFromXMLFile(16, gameManager.fileLoadName);
         // Draw the correct faces
         CreateTerrain();
         // Update mesh info
         voxelGenerator.updateMesh();
 
-        sceneManager.GameStart();
+        gameManager.GameStart();
     }
 
     public void Save()
     {
-        XMLVoxelFileWriter.SaveChunkToXMLFile(terrainArray, sceneManager.fileLoadName);
+        XMLVoxelFileWriter.SaveChunkToXMLFile(terrainArray, gameManager.fileLoadName);
+
+        
     }
 
      void InitialiseTerrain()
@@ -99,33 +101,7 @@ public class VoxelChunk : MonoBehaviour {
                     //if we are operating on 4th layer
                     if (y == 3)
                     {
-
                         terrainArray[x, y, z] = 1;
-                        /*
-                        terrainArray[0, 3, 1] = 4;
-                        terrainArray[0, 3, 2] = 4;
-                        terrainArray[0, 3, 3] = 4;
-                        terrainArray[1, 3, 3] = 4;
-                        terrainArray[1, 3, 4] = 4;
-                        terrainArray[2, 3, 4] = 4;
-                        terrainArray[3, 3, 4] = 4;
-                        terrainArray[4, 3, 4] = 4;
-                        terrainArray[5, 3, 4] = 4;
-                        terrainArray[5, 3, 3] = 4;
-                        terrainArray[5, 3, 2] = 4;
-                        terrainArray[6, 3, 2] = 4;
-                        terrainArray[7, 3, 2] = 4;
-                        terrainArray[8, 3, 2] = 4;
-                        terrainArray[9, 3, 2] = 4;
-                        terrainArray[10, 3, 2] = 4;
-                        terrainArray[11, 3, 2] = 4;
-                        terrainArray[12, 3, 2] = 4;
-                        terrainArray[13, 3, 2] = 4;
-                        terrainArray[13, 3, 3] = 4;
-                        terrainArray[14, 3, 3] = 4;
-                        terrainArray[15, 3, 3] = 4;
-                        */
-
                     }
                     //else if the layer is below the forth
                     else if (y < 3)
@@ -259,8 +235,6 @@ public class VoxelChunk : MonoBehaviour {
         spawnPosition.z = index.z;
 
         int destroyedBlock = terrainArray[(int)index.x, (int)index.y, (int)index.z];
-
-        Debug.Log(destroyedBlock);
 
         GameObject smallBlock = null;
         switch (destroyedBlock)
