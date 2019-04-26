@@ -60,16 +60,16 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    //Method to be called to enable panel
     public void InventoryActive(bool active)
     {
         mainPanel.SetActive(active);
     }
 
-
-
+    //Method to be called to check the name of the active item slot to update correct amount
     public void InventorySlot(int place)
     {
-
+        
         if (inventoryList[place].itemName == "Grass")
         {
             playerScript.blockType = 1;
@@ -91,7 +91,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Updating the text elements in the inventoryList to the correct name and string
         for (int i = 0; i < inventoryList.Count; i++)
         {
             if (inventoryList[i].itemNameText.text == "Grass")
@@ -116,18 +116,16 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+        //Checking if the player presses the key to run StartMergeSort
         if (Input.GetKeyDown(KeyCode.F5))
         {
             StartMergeSort();
-            for (int i = 0; i < inventoryList.Count; i++)
-            {
-                Debug.Log(inventoryList[i].itemAmount);
-            }
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        //Changing sort from high to low or low to high
+        if (Input.GetKeyDown(KeyCode.Alpha0))
             lowestFirst = false;
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.Alpha9))
             lowestFirst = true;
 
     }
@@ -148,86 +146,95 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    //Method to start MergeSort and to display the list in order
     public void StartMergeSort()
     {
         inventoryList = MergeSort(inventoryList);
 
         DisplayListInOrder();
-
-        //for (int i = 0; i < inventoryList.Count; i++)
-            //Debug.Log("pos " + i + " is item with amount " + inventoryList[i].itemAmount);
-
     }
 
     List<InventoryItemScript> MergeSort(List<InventoryItemScript> listIn)
     {
-
+        //Checking if the list is 1 or less as the method wouldnt need to run
         if (listIn.Count <= 1)
             return listIn;
 
-
+        //creating new lists
         List<InventoryItemScript> left = new List<InventoryItemScript>();
         List<InventoryItemScript> right = new List<InventoryItemScript>();
 
+        //Finding the middle
         int middle = listIn.Count / 2;
 
+        //Setting up the left and right list
         for (int i = 0; i < middle; i++)
         {
             left.Add(listIn[i]);
             right.Add(listIn[middle + i]);
         }
 
-        MergeSort(left);
-        MergeSort(right);
+        //Recursive call
+        left = MergeSort(left);
+        right = MergeSort(right);
 
+        //Passing left and right lists to Merge
         return listIn = Merge(left, right);
 
     }
 
     List<InventoryItemScript> Merge(List<InventoryItemScript> leftList, List<InventoryItemScript> rightList)
     {
-
         List<InventoryItemScript> merged = new List<InventoryItemScript>();
-        int i = 0;
-        int j = 0;
 
-        if (lowestFirst)
+        //While one of the list contains > 0
+        while (leftList.Count > 0 || rightList.Count > 0)
         {
-            while (leftList.Count > 0 || rightList.Count > 0)
+            //If both the lists are > 0
+            if (leftList.Count > 0 && rightList.Count > 0)
             {
-                if (leftList.Count > 0 && rightList.Count > 0)
+                //Check for lowest first
+                if (lowestFirst)
                 {
-
+                    //Checking the first elements for the lowest then adding to merged and removing from left or right
                     if (leftList[0].itemAmount <= rightList[0].itemAmount)
                     {
                         merged.Add(leftList[0]);
                         leftList.Remove(leftList[0]);
-                        i++;
                     }
                     else
                     {
                         merged.Add(rightList[0]);
                         rightList.Remove(rightList[0]);
-                        j++;
                     }
                 }
-                else if (leftList.Count > 0)
+                else
                 {
-
-                    merged.Add(leftList[0]);
-                    leftList.Remove(leftList[0]);
+                    if (leftList[0].itemAmount >= rightList[0].itemAmount)
+                    {
+                        merged.Add(leftList[0]);
+                        leftList.Remove(leftList[0]);
+                    }
+                    else
+                    {
+                        merged.Add(rightList[0]);
+                        rightList.Remove(rightList[0]);
+                    }
                 }
-                else if (rightList.Count > 0)
-                {
-                    merged.Add(rightList[0]);
-                    rightList.Remove(rightList[0]);
-                }
-
+            }
+            //Adding rest of elements
+            else if (leftList.Count > 0)
+            {
+                merged.Add(leftList[0]);
+                leftList.Remove(leftList[0]);
+            }
+            else if (rightList.Count > 0)
+            {
+                merged.Add(rightList[0]);
+                rightList.Remove(rightList[0]);
             }
         }
-
-
+        //returning the merged list
         return merged;
     }
-
 }

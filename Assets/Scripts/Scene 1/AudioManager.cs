@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-
+    //Storing sound
     public AudioClip dirtDestroy;
     public AudioClip dirtPlace;
 
@@ -17,18 +17,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip stoneDestroy;
     public AudioClip stonePlace;
 
-    // play the destroy block sound
-    void PlayDestroyBlockSound()
-    {
-        //GetComponent<AudioSource>().PlayOneShot(destroyBlockSound);
-    }
-
-    // play the place block sound
-    void PlayPlaceBlockSound()
-    {
-        //GetComponent<AudioSource>().PlayOneShot(placeBlockSound);
-    }
-
+    //Required methods for destroying and placing blocks
     void GrassDestroy()
     {
         GetComponent<AudioSource>().PlayOneShot(grassDestroy);
@@ -72,9 +61,7 @@ public class AudioManager : MonoBehaviour
     // When game object is enabled
     void OnEnable()
     {
-        VoxelChunk.OnEventBlockDestroyed += PlayDestroyBlockSound;
-        VoxelChunk.OnEventBlockPlaced += PlayPlaceBlockSound;
-
+        //Subscribing to required events
         VoxelChunk.OnEventGrassDestroy += GrassDestroy;
         VoxelChunk.OnEventGrassPlaced += GrassPlace;
 
@@ -91,9 +78,7 @@ public class AudioManager : MonoBehaviour
     // When game object is disabled
     void OnDisable()
     {
-        VoxelChunk.OnEventBlockDestroyed -= PlayDestroyBlockSound;
-        VoxelChunk.OnEventBlockPlaced -= PlayPlaceBlockSound;
-
+        //Unsubscribing to events
         VoxelChunk.OnEventGrassDestroy -= GrassDestroy;
         VoxelChunk.OnEventGrassPlaced -= GrassPlace;
 

@@ -44,8 +44,6 @@ public class XMLVoxelFileWriter
 
                         // End the voxel element
                         xmlWriter.WriteEndElement();
-
-
                     }
                 }
             }
@@ -57,7 +55,6 @@ public class XMLVoxelFileWriter
         xmlWriter.WriteEndDocument();
         // Close the document to save
         xmlWriter.Close();
-
     }
 
     // Read a voxel chunk from XML file
@@ -88,11 +85,8 @@ public class XMLVoxelFileWriter
                 int value = int.Parse(xmlReader.Value);
 
                 voxelArray[x, y, z] = value;
-
-
             }
         }
-
         return voxelArray;
     }
 }

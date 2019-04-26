@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
-
 public class VoxelGenerator : MonoBehaviour {
 
     Mesh mesh;
@@ -22,13 +21,6 @@ public class VoxelGenerator : MonoBehaviour {
     public float texSize;
 
     Dictionary<string, Vector2> texNameCoodDictionary;
-
-
-	// Use this for initialization
-	void Start ()
-    {
-
-    }
 
     public void Initialise()
     {
@@ -66,11 +58,6 @@ public class VoxelGenerator : MonoBehaviour {
         ClearPreviousData();
 
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {	
-	}
 
     //CLear previous data structure use to create the mesh
     public void ClearPreviousData()
@@ -93,7 +80,6 @@ public class VoxelGenerator : MonoBehaviour {
 
         CreateNegativeZFace(x, y, z, texture);
         CreatePositiveZFace(x, y, z, texture);
-
     }
 
     public void AddTrianglesIndices()
@@ -127,7 +113,6 @@ public class VoxelGenerator : MonoBehaviour {
 
         AddTrianglesIndices();
         AddUVCoords(uvCoords);
-
     }
 
     public void CreateNegativeZFace(int x, int y, int z, Vector2 uvCoords)
@@ -273,5 +258,4 @@ public class VoxelGenerator : MonoBehaviour {
             Debug.Log("texNames and tex Coords count mismatch");
         }
     }
-
 }

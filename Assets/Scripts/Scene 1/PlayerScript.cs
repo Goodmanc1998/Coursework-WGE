@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
+
+    //storing required scripts and variables
     public VoxelChunk voxelChunk;
     public InventoryManager inventoryManager;
-    public bool destroying;
 
+    public bool destroying;
     public int blockType;
 
     string activeBlock;

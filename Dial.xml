@@ -4,20 +4,20 @@
   <pairResponse playerResponse="Im doing okay" branch="1" />
   <pairResponse playerResponse="Im doing terrible" branch="2" />
   <pairResponse playerResponse="Im doing great" branch="3" />
-  <pair previousOption="0" position="0" NPCSpeach="Hey, how you doing?" />
-  <pairResponse playerResponse="Bye" branch="1" />
-  <pairResponse playerResponse="" branch="0" />
-  <pairResponse playerResponse="" branch="0" />
   <pair previousOption="1" position="1" NPCSpeach="Thats good to hear" />
   <pairResponse playerResponse="Bye" branch="1" />
   <pairResponse playerResponse="" branch="0" />
   <pairResponse playerResponse="" branch="0" />
-  <pair previousOption="2" position="1" NPCSpeach="Thats a shame" />
+  <pair previousOption="2" position="1" NPCSpeach="Aww What a shame" />
+  <pairResponse playerResponse="Bye" branch="1" />
+  <pairResponse playerResponse="" branch="0" />
+  <pairResponse playerResponse="" branch="0" />
+  <pair previousOption="3" position="1" NPCSpeach="No need to Brag about it" />
   <pairResponse playerResponse="Then why did you ask?" branch="1" />
   <pairResponse playerResponse="Bye" branch="2" />
   <pairResponse playerResponse="" branch="0" />
-  <pair previousOption="3" position="1" NPCSpeach="No need to brag" />
+  <pair previousOption="1" position="2" NPCSpeach="Im not in a great mood, sorry" />
   <pairResponse playerResponse="Bye" branch="1" />
   <pairResponse playerResponse="" branch="0" />
-  <pairResponse playerResponse="" branch="1" />
+  <pairResponse playerResponse="" branch="0" />
 </DialogueFile>

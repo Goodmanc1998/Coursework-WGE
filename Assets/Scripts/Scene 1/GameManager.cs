@@ -28,14 +28,17 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Disabling and enabling the required Gameobjects
         sceneCamera.SetActive(true);
         player.SetActive(false);
+        //Storing the Inventory manager
         inventoryManager = inventory.gameObject.GetComponent<InventoryManager>();
         player.transform.position = playerStart;
     }
 
     public void GameStart()
     {
+        //Enabling/Disabling required gameObjects for game
         sceneCamera.SetActive(false);
         player.SetActive(true);
         settingsPanel.SetActive(false);
@@ -44,6 +47,7 @@ public class GameManager : MonoBehaviour
 
     public void Menu()
     {
+        //Enabling/Disabling required gameObjects for menu
         sceneCamera.SetActive(true);
         player.SetActive(false);
 
@@ -52,12 +56,12 @@ public class GameManager : MonoBehaviour
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Checking if the player is trying to go to the menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Menu();
@@ -66,11 +70,13 @@ public class GameManager : MonoBehaviour
 
     public void InputText(string newText)
     {
+        //storing th inputed string
         fileLoadName = newText;
     }
 
     public void SceneTwo()
     {
+        //Loading the 2nd Scene
         SceneManager.LoadScene(secondScene);
     }
 }

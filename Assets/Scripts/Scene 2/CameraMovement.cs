@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    //storing required GameObjects and variables
     public GameObject player;
     public GameObject NPC;
 
@@ -29,6 +30,7 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         cameraPosition = transform.position;
+        //Checking if the camera needs to focus on the player or the NPC
         if(followPlayer)
         {
             targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, cameraPosition.z);
@@ -38,28 +40,28 @@ public class CameraMovement : MonoBehaviour
             targetPosition = new Vector3(NPC.transform.position.x, NPC.transform.position.y, cameraPosition.z);
         }
 
-
+        //Moving the camera to the target position
         transform.position = Vector3.Lerp(cameraPosition, targetPosition, speed);
 
+        //Checking if shake timer is greater than 0
         if(shakeTimer >= 0)
         {
+            //getting random Vector2 within a radius of x = 1 to x = -1 and same with y
             Vector2 cameraShake = Random.insideUnitCircle * shakePower;
-
+            //applying the Vector2 to the Target
             transform.position = new Vector3(transform.position.x + cameraShake.x, transform.position.y + cameraShake.y, transform.position.z);
-
+            //Updating timer
             shakeTimer -= Time.deltaTime;
 
         }
-
-
-        
     }
 
+    //Method to be called to start CameraShake
     public void CameraShake()
     {
         shakeTimer = shakeLength;
     }
-
+    //Method to be called to change target
     public void ChangeTarget(bool NPCCollided)
     {
         followPlayer = NPCCollided;

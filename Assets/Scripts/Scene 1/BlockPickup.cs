@@ -4,33 +4,20 @@ using UnityEngine;
 
 public class BlockPickup : MonoBehaviour
 {
+    //Storing required scripts and variables
     public int pickupAmount;
     InventoryManager inventoryManager;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //playerScript = player.GetComponent<PlayerScript>;
-
-    }
-
     private void Awake()
     {
-        //inventoryManager = GetComponent<InventoryManager>();
-
-
+        //Locating InventoryManager
         GameObject Inv = GameObject.Find("InventoryObject");
         inventoryManager = Inv.GetComponent<InventoryManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider collision)
     {
+        //Checking if collision with player then checking the name to apply ammount to needed itemAmount
         if (collision.gameObject.tag == "Player")
         {
             if(gameObject.name == "Grass(Clone)")

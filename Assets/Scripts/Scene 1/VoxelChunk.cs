@@ -15,9 +15,6 @@ public class VoxelChunk : MonoBehaviour {
     public delegate void EventBlockChanged();
 
     // event instances for EventBlockChanged
-    public static event EventBlockChanged OnEventBlockDestroyed;
-    public static event EventBlockChanged OnEventBlockPlaced;
-
     public static event EventBlockChanged OnEventGrassDestroy;
     public static event EventBlockChanged OnEventGrassPlaced;
 
@@ -53,20 +50,7 @@ public class VoxelChunk : MonoBehaviour {
 
     }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            // Get terrainArray from XML file
-            terrainArray = XMLVoxelFileWriter.LoadChunkFromXMLFile(16, gameManager.fileLoadName);
-            // Draw the correct faces
-            CreateTerrain();
-            // Update mesh info
-            voxelGenerator.updateMesh();
-
-        }
-    }
-
+    //Method to be called to update the map
     public void Apply()
     {
         // Get terrainArray from XML file
@@ -79,11 +63,10 @@ public class VoxelChunk : MonoBehaviour {
         gameManager.GameStart();
     }
 
+    //Method to start save
     public void Save()
     {
         XMLVoxelFileWriter.SaveChunkToXMLFile(terrainArray, gameManager.fileLoadName);
-
-        
     }
 
      void InitialiseTerrain()
@@ -148,8 +131,6 @@ public class VoxelChunk : MonoBehaviour {
                                 break;
 
                         }
-                        //voxelGenerator.CreateVoxel(x, y, z, tex);
-
                         //check if we need to draw the negative x face
                         if (x == 0 || terrainArray[x - 1, y, z] == 0)
                         {
@@ -182,7 +163,6 @@ public class VoxelChunk : MonoBehaviour {
                         {
                             voxelGenerator.CreatePositiveZFace(x, y, z, tex);
                         }
-                        //print("Create " + tex + " block");
                     }
                 }
             }
@@ -193,7 +173,6 @@ public class VoxelChunk : MonoBehaviour {
     {
         if ((index.x > -1 && index.x < terrainArray.GetLength(0)) && (index.y > -1 && index.y < terrainArray.GetLength(1)) && (index.z > -1 && index.z < terrainArray.GetLength(2)))
         {
-
             //Change the block to the required type
             terrainArray[(int)index.x, (int)index.y, (int)index.z] = blockType;
 
@@ -202,12 +181,8 @@ public class VoxelChunk : MonoBehaviour {
 
             //Update the mesh data
             voxelGenerator.updateMesh();
-
-            //Debug.Log(blockType);
         }
-
-        //Debug.Log(blockType);
-
+        //Checking blocktype to play correct sound
         if (blockType == 1)
         {
             OnEventGrassPlaced();
@@ -227,6 +202,7 @@ public class VoxelChunk : MonoBehaviour {
         
     }
 
+    //Method to be called to spawn small block
     public void SpawnSmallBlock(Vector3 index)
     {
         Vector3 spawnPosition;
@@ -237,6 +213,7 @@ public class VoxelChunk : MonoBehaviour {
         int destroyedBlock = terrainArray[(int)index.x, (int)index.y, (int)index.z];
 
         GameObject smallBlock = null;
+        //Switching small block depending on destroyed block
         switch (destroyedBlock)
         {
             case 1:
@@ -256,8 +233,10 @@ public class VoxelChunk : MonoBehaviour {
                 break;
         }
 
+        //Spawning small block
         GameObject block = Instantiate(smallBlock, spawnPosition, transform.rotation) as GameObject;
 
+        //calls event depending on destroyed block
         if(destroyedBlock == 1)
         {
             OnEventGrassDestroy();
@@ -274,6 +253,5 @@ public class VoxelChunk : MonoBehaviour {
         {
             OnEventStoneDestroy();
         }
-        
     }
 }

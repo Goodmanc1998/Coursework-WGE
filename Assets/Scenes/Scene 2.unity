@@ -2174,7 +2174,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4101536231121934, guid: af013052b86cd6d42a2ea33b8533664a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.13
+      value: 26.8
       objectReference: {fileID: 0}
     - target: {fileID: 4101536231121934, guid: af013052b86cd6d42a2ea33b8533664a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2242,7 +2242,7 @@ PrefabInstance:
     - target: {fileID: 114299321614154198, guid: af013052b86cd6d42a2ea33b8533664a,
         type: 3}
       propertyPath: timeForShake
-      value: 0.9
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 50831842124396082, guid: af013052b86cd6d42a2ea33b8533664a,
         type: 3}
@@ -2371,6 +2371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraMovement: {fileID: 609484272}
   speechPanel: {fileID: 403775298}
+  player: {fileID: 703472074}
   NPCText: {fileID: 819268740}
   playerText:
   - {fileID: 1929576586}
@@ -2386,14 +2387,6 @@ MonoBehaviour:
     - Im doing terrible
     - Im doing great
     branch: 010000000200000003000000
-  - previousOption: 0
-    position: 0
-    NPCSpeach: Hey, how you doing?
-    playerResponse:
-    - Bye
-    - 
-    - 
-    branch: 010000000000000000000000
   - previousOption: 1
     position: 1
     NPCSpeach: Thats good to hear
@@ -2404,21 +2397,28 @@ MonoBehaviour:
     branch: 010000000000000000000000
   - previousOption: 2
     position: 1
-    NPCSpeach: Thats a shame
+    NPCSpeach: Aww What a shame
+    playerResponse:
+    - Bye
+    - 
+    - 
+    branch: 010000000000000000000000
+  - previousOption: 3
+    position: 1
+    NPCSpeach: No need to Brag about it
     playerResponse:
     - Then why did you ask?
     - Bye
     - 
     branch: 010000000200000000000000
-  - previousOption: 3
-    position: 1
-    NPCSpeach: No need to brag
+  - previousOption: 1
+    position: 2
+    NPCSpeach: Im not in a great mood, sorry
     playerResponse:
     - Bye
     - 
     - 
-    branch: 010000000000000001000000
-  player: {fileID: 703472074}
+    branch: 010000000000000000000000
 --- !u!58 &1463855797
 CircleCollider2D:
   m_ObjectHideFlags: 0
