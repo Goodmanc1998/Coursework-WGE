@@ -21,8 +21,6 @@ public class PlayerScript : MonoBehaviour
         blockType = 1;
     }
 
-    VoxelGenerator voxelGenerator;
-
     // Update is called once per frame
     void Update()
     {
@@ -55,11 +53,10 @@ public class PlayerScript : MonoBehaviour
             {
                 if (inventoryManager.itemAmounts[0] > 0)
                 {
-                    inventoryManager.itemAmounts[0]--;
-
                     if (pickingBlock(out v, 4))
                     {
                         voxelChunk.SetBlock(v, blockType);
+                        inventoryManager.itemAmounts[0]--;
                     }
                 }
             }
@@ -67,11 +64,10 @@ public class PlayerScript : MonoBehaviour
             {
                 if (inventoryManager.itemAmounts[1] > 0)
                 {
-                    inventoryManager.itemAmounts[1]--;
-
                     if (pickingBlock(out v, 4))
                     {
                         voxelChunk.SetBlock(v, blockType);
+                        inventoryManager.itemAmounts[1]--;
                     }
                 }
             }
@@ -79,11 +75,10 @@ public class PlayerScript : MonoBehaviour
             {
                 if (inventoryManager.itemAmounts[2] > 0)
                 {
-                    inventoryManager.itemAmounts[2]--;
-
                     if (pickingBlock(out v, 4))
                     {
                         voxelChunk.SetBlock(v, blockType);
+                        inventoryManager.itemAmounts[2]--;
                     }
                 }
             }
@@ -91,11 +86,10 @@ public class PlayerScript : MonoBehaviour
             {
                 if (inventoryManager.itemAmounts[3] > 0)
                 {
-                    inventoryManager.itemAmounts[3]--;
-
                     if (pickingBlock(out v, 4))
                     {
                         voxelChunk.SetBlock(v, blockType);
+                        inventoryManager.itemAmounts[3]--;
                     }
                 }
             }
@@ -116,10 +110,6 @@ public class PlayerScript : MonoBehaviour
             inventoryManager.InventorySlot(2);
         if (Input.GetKey(KeyCode.Alpha4))
             inventoryManager.InventorySlot(3);
-
-
-
-
     }
 
     public bool pickingBlock(out Vector3 v, float dist)
